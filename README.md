@@ -67,8 +67,8 @@ Osserviamo gli ingressi e le uscite della scheda:
 <ul>
 <li>'Motor-A'(Pin 1): Va collegato al DC motor 1</li>
 <li>'Motor-A'(Pin 2): Va collegato all'altro capo del DC motor 1</li>
-<li>'Motor-A'(Pin 1): Va collegato al DC motor 2</li>
-<li>'Motor-A'(Pin 2): Va collegato all'altro capo del DC motor 2</li>
+<li>'Motor-B'(Pin 1): Va collegato al DC motor 2</li>
+<li>'Motor-B'(Pin 2): Va collegato all'altro capo del DC motor 2</li>
 </ul>
 
 ## Creazione file
