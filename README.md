@@ -14,7 +14,7 @@ Possiede inoltre anche un modulo WIFI che, in successive implementazione, potreb
 ## Definizione concetti
 Prima di scrivere il codice che controllerà la nostra macchina è importante chiarire alcuni concetti:<br>
 <br>
--La macchina seguirà una striscia nera presente sotto di essa che verrà rilevata mediante appositi \[sensori](#sensori)<br>
+-La macchina seguirà una striscia nera posizionata al di sotto della stessa, la linea sarà rilevata mediante appositi [sensori](#sensori)<br>
 -Una volta capita la posizione della macchina relativamente alla linea si procede con l'azionamento degli [attuatori](#attuatori)<br>
 -Nel caso in cui un ostacolo si ponga davanti alla macchina, questa si arresterà<br>
 
