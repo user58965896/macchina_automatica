@@ -8,40 +8,6 @@ Per lo sviluppo del progetto si è deciso di utilizzare una scheda [B-L475E-IOT0
 Dotata di sensori utili al progetto come quello di prossimità.
 Possiede inoltre anche un modulo WIFI che, in successive implementazione, potrebbe permettere il controllo a distanza del dispositivo.
 
-## Creazione file
-
-### Per utilizzare il sensore di prossimità ho utilizzato il template che si trova a questa PATH
-
-`C:\Users\{VOSTRO_USERNAME}\STM32Cube\Repository\STM32Cube_FW_L4_V1.17.2\Projects\B-L475E-IOT01A\Applications\Proximity\`
-
-In questo modo avrete il codice del sensore di prossimità.
-Di questo file le funzioni che ci serviranno saranno:
-
-	 `static void VL53L0X_PROXIMITY_Init(void)` 
-	 `static uint16_t VL53L0X_PROXIMITY_GetDistance(void)` 
-
-
-## Inizializzazione PIN
-
-Creiamo un file temporaneo e apriamo la schermata dell'IDE dove è possibile selezionare il funzionamento dei pin.
-Da questa schermata impostiamo i pin necessari secondo lo schema riportato sotto:
-
-|Nome  | PIN | GPIO	|		Funzione  							|
-|:-----:|:---:|:----:|:----------------------------------------:|
-|PA3   |D4   |GPIO\_PIN\_3|		MSB Ruota 1						|
-|PB4   |D5   |GPIO\_PIN\_4|		LSB Ruota 1						|
-|PB1   |D6   |GPIO\_PIN\_1|		MSB Ruota 2						|
-|PA4   |D7   |GPIO\_PIN\_4|		LSB Ruota 2						|
-|PA15  |D9 	 |GPIO\_PIN\_15|	SENSORE DI CONTROLLO CENTRALE	|
-|PA2   |D10  |GPIO\_PIN\_2|		SENSORE DI CONTROLLO SX			|
-|PA7   |D11  |GPIO\_PIN\_7|		SENSORE DI CONTROLLO DX			|
-
-Una volta impostati i pin bisognerà generare il file <em>main.c</em> tramite il compilatore.
-Una volta generato il file sarà necessario copiare la funzione
-
-`static void MX_GPIO_Init(void)`
-
-nel file del sensore di prossimità, così da inizializzare correttamente i PIN.
 
 ## Definizione concetti
 Prima di scrivere il codice che controllerà la nostra macchina è importante chiarire alcuni concetti:<br>
@@ -100,3 +66,39 @@ Osserviamo gli ingressi e le uscite della scheda:
 <li>'Motor-A'(Pin 1): Va collegato al DC motor 2</li>
 <li>'Motor-A'(Pin 2): Va collegato all'altro capo del DC motor 2</li>
 </ul>
+
+## Creazione file
+
+### Per utilizzare il sensore di prossimità ho utilizzato il template che si trova a questa PATH
+
+`C:\Users\{VOSTRO_USERNAME}\STM32Cube\Repository\STM32Cube_FW_L4_V1.17.2\Projects\B-L475E-IOT01A\Applications\Proximity\`
+
+In questo modo avrete il codice del sensore di prossimità.
+Di questo file le funzioni che ci serviranno saranno:
+
+	 `static void VL53L0X_PROXIMITY_Init(void)` 
+	 `static uint16_t VL53L0X_PROXIMITY_GetDistance(void)` 
+
+
+## Inizializzazione PIN
+
+Creiamo un file temporaneo e apriamo la schermata dell'IDE dove è possibile selezionare il funzionamento dei pin.
+Da questa schermata impostiamo i pin necessari secondo lo schema riportato sotto:
+
+|Nome  | PIN | GPIO	|		Funzione  							|
+|:-----:|:---:|:----:|:----------------------------------------:|
+|PA3   |D4   |GPIO\_PIN\_3|		MSB Ruota 1						|
+|PB4   |D5   |GPIO\_PIN\_4|		LSB Ruota 1						|
+|PB1   |D6   |GPIO\_PIN\_1|		MSB Ruota 2						|
+|PA4   |D7   |GPIO\_PIN\_4|		LSB Ruota 2						|
+|PA15  |D9 	 |GPIO\_PIN\_15|	SENSORE DI CONTROLLO CENTRALE	|
+|PA2   |D10  |GPIO\_PIN\_2|		SENSORE DI CONTROLLO SX			|
+|PA7   |D11  |GPIO\_PIN\_7|		SENSORE DI CONTROLLO DX			|
+
+Una volta impostati i pin bisognerà generare il file <em>main.c</em> tramite il compilatore.
+Una volta generato il file sarà necessario copiare la funzione
+
+`static void MX_GPIO_Init(void)`
+
+nel file del sensore di prossimità, così da inizializzare correttamente i PIN.
+
