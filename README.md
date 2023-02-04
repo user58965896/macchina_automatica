@@ -13,11 +13,11 @@ Possiede inoltre anche un modulo WIFI che, in successive implementazione, potreb
 
 ## Definizione concetti
 Prima di scrivere il codice che controllerà la nostra macchina è importante chiarire alcuni concetti:<br>
-<ul>
-<li>La macchina seguirà una striscia nera presente sotto di essa che verrà rilevata mediante appositi [sensori](#sensori)</li>
-<li>Una volta capita la posizione della macchina relativamente alla linea si procede con l'azionamento degli [attuatori](#attuatori)</li>
-<li>Nel caso in cui un ostacolo si ponga davanti alla macchina, questa si arresterà</li>
-</ul>
+<br>
+-La macchina seguirà una striscia nera presente sotto di essa che verrà rilevata mediante appositi \[sensori](#sensori)<br>
+-Una volta capita la posizione della macchina relativamente alla linea si procede con l'azionamento degli [attuatori](#attuatori)<br>
+-Nel caso in cui un ostacolo si ponga davanti alla macchina, questa si arresterà<br>
+
 
 ## Sensori
 Sono utilizzati tre [TCRT5000.](https://www.makerslab.it/sensore-infrarossi-tcrt5000/) Di seguito si riassume il loro funzionamento:<br>
