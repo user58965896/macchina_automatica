@@ -294,3 +294,102 @@ Il caso è molto simile a quello precedentemente analizzato ma con le direzioni 
 |	  0     |    1    | Ruota antiorario    |
 |	  1     |    0    | Ruota orario    |
 |	  1     |    1    |    Frena     |
+
+
+## Funzione main()
+
+All'interno del main sarà necessario innanzitutto definire una variabile che contenga la distanza dell'ostacolo più vicino
+
+```
+  uint16_t distanza;
+```
+
+Dopodiché bisognerà spostarsi all'interno del ```while(true)``` e inserire il codice che gestisca la macchina durante il percorso.
+
+```
+while (1)
+  {
+	 //Se la distanza non è sicura mi fermo
+	 distanza = VL53L0X_PROXIMITY_GetDistance();
+	 if( distanza < MAX_DISTANCE ){
+		spegni_motori();
+		printf("DISTANCE is = %d mm \n\r", distanza);
+		HAL_Delay(100);
+		continue;
+	}
+
+	//Se il sensore trova linea nera, vado avanti
+	if( linea_nera_centrale() ){
+		vai_avanti();
+	}else{
+		//Se non trovo la linea nera centrale allora controllo ai lati
+		if( linea_nera_sx() ){
+			//Mi riposiziono per eccitare il sensore centrale girando in senso orario
+			gira_orario(&linea_centrale, &linea_sx);
+		}else if( linea_nera_dx() ){
+			//Mi riposiziono per eccitare il sensore centrale girando in senso antiorario
+			gira_antiorario(&linea_centrale, &linea_dx);
+		//Se non c'è alcuna linea mi fermo
+		}else{
+			frena();
+			spegni_motori();
+		}
+	}
+
+
+
+	HAL_Delay(10);
+  }
+
+```
+
+La prima parte che si analizza è la distanza da un ostacolo: se questa dovesse essere inferiore a un valore definito da una costante ```#MAX_DISTANCE``` allora l'esecuzione dell'iterazione viene subito annullata mediante l'utilizzo di un ```continue``` al veicolo di muoversi.
+
+```
+//Se la distanza non è sicura mi fermo
+ distanza = VL53L0X_PROXIMITY_GetDistance();
+ if( distanza < MAX_DISTANCE ){
+	spegni_motori();
+	printf("DISTANCE is = %d mm \n\r", distanza);
+	HAL_Delay(100);
+	continue;
+}
+```
+
+
+Procedendo, nel caso in cui la distanza sia sicura, si controlla che la linea sia al centro, in caso positivo, si prosegue dritto
+
+```
+if( linea_nera_centrale() ){
+	vai_avanti();
+}
+```
+
+Nel caso in cui la linea nera non si trovi al centro, si prosegue controllando che questa sia a sinistra, in caso affermativo bisognerà ruotare la macchina tramite la funzione ```gira_orario()```
+
+```
+if( linea_nera_sx() ){
+	//Mi riposiziono per eccitare il sensore centrale girando in senso orario
+	gira_orario(&linea_centrale, &linea_sx);
+}
+```
+
+Se la linea non dovesse trovarsi a sinistra, allora si procederà controllando a destra, nel caso l'ipotesi sia verificata il procedimento è il medesimo: 
+
+```
+else if( linea_nera_dx() ){
+	//Mi riposiziono per eccitare il sensore centrale girando in senso antiorario
+	gira_antiorario(&linea_centrale, &linea_dx);
+}
+
+```
+
+Se non vi è alcuna linea, la macchina si arresta
+
+```
+else{
+	frena();
+	spegni_motori();
+}
+
+```
