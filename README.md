@@ -46,7 +46,7 @@ Mediante l'utilizzo di questi motori, collegati a delle ruote, è possibile muov
 <br>Per quanto riguarda il moto rettilineo, è sufficiente che le due ruote si muovano alla stessà velocità.
 <br>Per effettuare una rotazione (oraria/antioraria) sarà sufficiente muovere le ruote in direzioni opposte.
 <br>Poniamo che la linea nera ecciti il sensore sinistro della macchina, sarà sufficiente far ruotare questa in senso antiorario per ritrovare di nuovo la linea nera sotto il centro e proseguire dritto.
-<br>A gestire questi attuatori viene utilizzato un [L298N.](https://www.lombardoandrea.com/l298n-motore-dc-arduino/)
+<br>Per gestire questi attuatori viene utilizzato un [L298N.](https://www.lombardoandrea.com/l298n-motore-dc-arduino/)
 
 ![L298N](https://m.media-amazon.com/images/I/612gWwZKexL._AC_SL1000_.jpg)
 
@@ -106,3 +106,37 @@ Una volta generato il file sarà necessario copiare la funzione
 
 nel file del sensore di prossimità, così da inizializzare correttamente i PIN.
 
+Nel main è importante non cancellare la chiamata di funzione 
+
+`VL53L0X_PROXIMITY_Init()`
+
+Che inizializza la comunicazione con il sensore di umidità e ne effettua la taratura
+
+
+## Creazione funzioni
+
+Per rendere il codice più leggibile e facile da sviluppare è necessario creare alcune funzioni che ci permettano di interagire con la macchina
+
+```
+void spegni_motori();
+void vai_avanti();
+void vai_indietro();
+void frena();
+int linea_nera_centrale();
+int linea_nera_sx();
+int linea_nera_dx();
+void gira_orario();
+void gira_antiorario();
+```
+
+Di seguito verrà spiegato il funzionamento e l'implementazione delle funzioni.
+
+```
+void spegni_motori(){
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+}
+```
