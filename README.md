@@ -254,7 +254,7 @@ void gira_orario(){
 }
 ```
 
-La funzione viene invocata nel caso in cui la linea nera dovesse essere rilevata dal sensore destro. In questo caso, come anticipato nella sezione [attuatori,](Attuatori) sarà sufficiente far ruotare l'auto in senso orario per riportare la linea al centro.
+La funzione viene invocata nel caso in cui la linea nera dovesse essere rilevata dal sensore destro. In questo caso, come anticipato nella sezione [attuatori,](attuatori) sarà sufficiente far ruotare l'auto in senso orario per riportare la linea al centro.
 Per ottenre un movimento orario bisognerà far girare la ruota interna (destra) in senso antiorario e quella esterna (sinistra) in senso orario.
 Una volta riportata la linea al centro, fermo i motori e li spengo.
 
@@ -290,7 +290,7 @@ Il caso è molto simile a quello precedentemente analizzato ma con le direzioni 
 
 |    MSB    |	LSB   |	   OUTPUT    |
 |:-----------:|:---------:|:--------------:|
-|	  0     |    0    | Motore OFF   |
-|	  0     |    1    | Ruota Ant    |
-|	  1     |    0    | Ruota ora    |
+|	  0     |    0    | Motore spento  |
+|	  0     |    1    | Ruota antiorario    |
+|	  1     |    0    | Ruota orario    |
 |	  1     |    1    |    Frena     |
