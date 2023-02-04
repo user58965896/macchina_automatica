@@ -8,7 +8,7 @@ Per lo sviluppo del progetto si è deciso di utilizzare una scheda [B-L475E-IOT0
 ![B-L475E-IOT01A2_IMG](https://www.st.com/bin/ecommerce/api/image.PF264366.en.feature-description-include-personalized-no-cpn-medium.jpg)
 
 Dotata di sensori utili al progetto come quello di prossimità.
-Possiede inoltre anche un modulo WIFI che, in successive implementazione, potrebbe permettere il controllo a distanza del dispositivo.
+Possiede inoltre anche un modulo WIFI che, in successive implementazioni, potrebbe permettere il controllo a distanza del dispositivo.
 
 
 ## Definizione concetti
