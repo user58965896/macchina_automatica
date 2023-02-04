@@ -176,7 +176,7 @@ void vai_indietro(){
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);	//LSB_2
 }
 ```
-Tramite questa funzione proseguono nella stessa direzione alla medesima velocità ruotando all'indietro.
+Tramite questa funzione, le ruote, proseguono nella stessa direzione alla medesima velocità ruotando all'indietro.
 Questo avviene (almeno in questa configurazione) se entrambi gli MSB delle ruote sono impostati a 0 e gli LSB sono a 1.
 
 
@@ -258,7 +258,7 @@ void gira_orario(){
 
 La funzione viene invocata nel caso in cui la linea nera dovesse essere rilevata dal sensore destro. In questo caso, come anticipato nella sezione [attuatori,](#attuatori) sarà sufficiente far ruotare l'auto in senso orario per riportare la linea al centro.
 Per ottenre un movimento orario bisognerà far girare la ruota interna (destra) in senso antiorario e quella esterna (sinistra) in senso orario.
-Una volta riportata la linea al centro, fermo i motori e li spengo.
+Una volta riportata la linea al centro, si fermano i motori e si spengono.
 
 ### Rotazione antioraria
 
