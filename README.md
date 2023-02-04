@@ -73,12 +73,12 @@ Osserviamo gli ingressi e le uscite della scheda:
 
 ## Creazione file
 
-### Per utilizzare il sensore di prossimità si ci è basati sul template che si trova a questa PATH
+### Per utilizzare il sensore di prossimità si partirà dal template che si trova a questa PATH
 
 `C:\Users\{VOSTRO_USERNAME}\STM32Cube\Repository\STM32Cube_FW_L4_V1.17.2\Projects\B-L475E-IOT01A\Applications\Proximity\`
 
-In questo modo avrete il codice del sensore di prossimità.
-Di questo file le funzioni che ci serviranno saranno:
+In questo modo si otterrà il codice per il sensore di prossimità.
+Da questo file le funzioni che serviranno sono:
 
  ```
  static void VL53L0X_PROXIMITY_Init(void)
