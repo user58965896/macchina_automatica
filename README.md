@@ -80,8 +80,8 @@ Osserviamo gli ingressi e le uscite della scheda:
 In questo modo avrete il codice del sensore di prossimità.
 Di questo file le funzioni che ci serviranno saranno:
 
-	 `static void VL53L0X_PROXIMITY_Init(void)` 
-	 `static uint16_t VL53L0X_PROXIMITY_GetDistance(void)` 
+ `static void VL53L0X_PROXIMITY_Init(void)` 
+ `static uint16_t VL53L0X_PROXIMITY_GetDistance(void)` 
 
 
 ## Inizializzazione PIN
