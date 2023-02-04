@@ -112,7 +112,7 @@ Nel main è importante non cancellare la chiamata di funzione
 
 `VL53L0X_PROXIMITY_Init()`
 
-Che inizializza la comunicazione con il sensore di umidità e ne effettua la taratura
+Che inizializza la comunicazione con il sensore di prossimità e ne effettua la taratura
 
 
 ## Creazione funzioni
