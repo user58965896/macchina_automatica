@@ -131,6 +131,7 @@ void gira_antiorario();
 
 Di seguito verrà spiegato il funzionamento e l'implementazione delle funzioni.
 
+#### Spegnimento motori
 ```
 void spegni_motori(){
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
@@ -140,3 +141,156 @@ void spegni_motori(){
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
 }
 ```
+
+Come suggerito dal nome, questa funzione ha lo scopo di spegnere i motori: nel caso in cui questi fossero in uno stato precedente di movimento, il movimento si protrarrà per inerzia fino ad esaurirsi.
+Per ottenere questa modalità di funzionamento sarà sufficiente impostare i bit di controllo di entrambe le ruote a 0.
+
+### Procedere dritto
+
+```
+void vai_avanti(){
+	  //IMPOSTO I BIT DELLA PRIMA RUOTA
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);	//MSB_1
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET); //LSB_1
+
+	  //IMPOSTO I BIT DELLA SECONDA RUOTA
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);	//MSB_2
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //LSB_2
+}
+```
+Tramite questa funzione proseguono nella stessa direzione alla medesima velocità, il che si tradurrà, approssimativamente, in un moto rettilineo.
+Questo avviene (almeno in questa configurazione) se entrambi gli MSB delle ruote sono impostati a 1 e gli LSB sono a 0.
+
+### Procedere a ritroso
+
+```
+void vai_indietro(){
+	  //CONFIGURAZIONE PRIMA RUOTA
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //MSB_1
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);   //LSB_1
+
+	  //CONFIGURAZIONE SECONDA RUOTA
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);	//MSB_2
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);	//LSB_2
+}
+```
+Tramite questa funzione proseguono nella stessa direzione alla medesima velocità ruotando all'indietro.
+Questo avviene (almeno in questa configurazione) se entrambi gli MSB delle ruote sono impostati a 0 e gli LSB sono a 1.
+
+
+### Frenatura 
+
+```
+void frena(){
+	  //CONFIGURAZIONE CON TUTTI I BIT A 1
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+}
+```
+
+Imprime una forza bloccante alle ruote che si opporrà all'inerzia di movimento delle ruote.
+Si ottiene impostando tutti i bit di entrambe le ruote a 1.
+
+### Rileva linea al centro
+
+```
+int linea_nera_centrale(){
+	//RITORNO 1 SE IL SENSORE CENTRALE HA TROVATO LA LINEA NERA
+	return  (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_15) == GPIO_PIN_SET ) ? 1:0;
+}
+```
+
+La funzione ritorna 1 (int) se sotto la macchina, al suo centro, vi è una linea nera.
+
+### Rileva linea a destra
+
+```
+int linea_nera_dx(){
+	//RITORNO 1 SE IL SENSORE DESTRO HA TROVATO LA LINEA NERA
+	return  (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == GPIO_PIN_SET ) ? 1:0;
+}
+```
+
+La funzione ritorna 1 (int) se sotto la sezione destra della macchina, vi è una linea nera.
+
+### Rileva linea a sinistra
+
+```
+int linea_nera_sx(){
+	//RITORNO 1 SE IL SENSORE SINISTRO HA TROVATO LA LINEA NERA
+	return  (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2) == GPIO_PIN_SET ) ? 1:0;
+}
+
+```
+
+La funzione ritorna 1 (int) se sotto la sezione sinistra della macchina, vi è una linea nera.
+
+
+### Rotazione oraria
+
+```
+void gira_orario(){
+
+	//La ruota dx va in antiorario
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+
+	//La ruota sx va in orario
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+
+
+	  //Finché la macchina non rileva una linea al centro
+	  //continua a girare
+	  while(!linea_nera_centrale() && linea_nera_sx())
+		  HAL_Delay(10);
+	  //Trovata la linea mi fermo e spengo i motori
+	  frena();
+	  spegni_motori();
+
+}
+```
+
+La funzione viene invocata nel caso in cui la linea nera dovesse essere rilevata dal sensore destro. In questo caso, come anticipato nella sezione [attuatori,](Attuatori) sarà sufficiente far ruotare l'auto in senso orario per riportare la linea al centro.
+Per ottenre un movimento orario bisognerà far girare la ruota interna (destra) in senso antiorario e quella esterna (sinistra) in senso orario.
+Una volta riportata la linea al centro, fermo i motori e li spengo.
+
+### Rotazione antioraria
+
+```
+void gira_antiorario(){
+
+	//La ruota dx va in orario
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+
+	//La ruota sx va in antiorario
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+
+	  //Finché la macchina non rileva una linea al centro
+	  //continua a girare
+	  while(!linea_nera_centrale() && linea_nera_dx())
+	  		  HAL_Delay(10);
+	  //Trovata la linea mi fermo e spengo i motori
+	  frena();
+	  spegni_motori();
+
+}
+
+```
+
+Il caso è molto simile a quello precedentemente analizzato ma con le direzioni invertite: in questo caso sarà la ruota sinistra a girare in senso antiorario, quella destra girerà invece in senso orario.
+
+
+### Ai fini di riassumere la gestione delle ruote viene riportata di seguito una tabella
+
+|    MSB    |	LSB   |	   OUTPUT    |
+|:-----------:|:---------:|:--------------:|
+|	  0     |    0    | Motore OFF   |
+|	  0     |    1    | Ruota Ant    |
+|	  1     |    0    | Ruota ora    |
+|	  1     |    1    |    Frena     |
