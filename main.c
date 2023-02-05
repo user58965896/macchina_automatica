@@ -145,10 +145,10 @@ int main(void)
 	}else{
 		//Se non trovo la linea nera centrale allora controllo ai lati
 		if( linea_nera_sx() ){
-			//Mi riposiziono per eccitare il sensore centrale girando in senso orario
+			//Mi riposiziono per eccitare il sensore centrale girando in senso antiorario
 			gira_antiorario();
 		}else if( linea_nera_dx() ){
-			//Mi riposiziono per eccitare il sensore centrale girando in senso antiorario
+			//Mi riposiziono per eccitare il sensore centrale girando in senso orario
 			gira_orario();
 		//Se non c'è alcuna linea mi fermo
 		}else{
