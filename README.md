@@ -312,6 +312,7 @@ while (1)
 	 //Se la distanza non è sicura mi fermo
 	 distanza = VL53L0X_PROXIMITY_GetDistance();
 	 if( distanza < MAX_DISTANCE ){
+	 	frena();
 		spegni_motori();
 		printf("DISTANCE is = %d mm \n\r", distanza);
 		HAL_Delay(100);
@@ -349,6 +350,7 @@ La prima parte che si analizza è la distanza da un ostacolo: se questa dovesse 
 //Se la distanza non è sicura mi fermo
  distanza = VL53L0X_PROXIMITY_GetDistance();
  if( distanza < MAX_DISTANCE ){
+ 	frena();
 	spegni_motori();
 	printf("DISTANCE is = %d mm \n\r", distanza);
 	HAL_Delay(100);
