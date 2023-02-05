@@ -73,8 +73,8 @@ void frena();
 int linea_nera_centrale();
 int linea_nera_sx();
 int linea_nera_dx();
-void gira_orario(int* centrale, int* sx);
-void gira_antiorario(int* centrale, int* dx);
+void gira_orario();
+void gira_antiorario();
 
 /**
   * @brief  Main program
@@ -126,11 +126,6 @@ int main(void)
   VL53L0X_PROXIMITY_Init();
   uint16_t distanza;
 
-  //Variabili linee
-  int linea_centrale = 0;
-  int linea_sx       = 0;
-  int linea_dx       = 0;
-
 
   while (1)
   {
@@ -151,10 +146,10 @@ int main(void)
 		//Se non trovo la linea nera centrale allora controllo ai lati
 		if( linea_nera_sx() ){
 			//Mi riposiziono per eccitare il sensore centrale girando in senso orario
-			gira_orario(&linea_centrale, &linea_sx);
+			gira_antiorario();
 		}else if( linea_nera_dx() ){
 			//Mi riposiziono per eccitare il sensore centrale girando in senso antiorario
-			gira_antiorario(&linea_centrale, &linea_dx);
+			gira_orario();
 		//Se non c'è alcuna linea mi fermo
 		}else{
 			frena();
@@ -458,13 +453,13 @@ int linea_nera_dx(){
 	return  (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7) == GPIO_PIN_SET ) ? 1:0;
 }
 
-void gira_orario(int* centrale, int* sx){
+void gira_antiorario(){
 
-	//La ruota dx va in antiorario
+	//La ruota dx va in orario
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
 
-	//La ruota sx va in orario
+	//La ruota sx va in antiorario
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
 
@@ -477,18 +472,15 @@ void gira_orario(int* centrale, int* sx){
 	  frena();
 	  spegni_motori();
 
-	  //Imposto le variabili
-	  *centrale = 1;
-	  *sx = 0;
 }
 
-void gira_antiorario(int* centrale, int* dx){
+void gira_orario(){
 
-	//La ruota dx va in orario
+	//La ruota dx va in antiorario
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
 
-	//La ruota sx va in antiorario
+	//La ruota sx va in orario
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
 
@@ -500,9 +492,6 @@ void gira_antiorario(int* centrale, int* dx){
 	  frena();
 	  spegni_motori();
 
-	  //Imposto le variabili
-	  *centrale = 1;
-	  *dx = 0;
 }
 
 
