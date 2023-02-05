@@ -137,6 +137,7 @@ int main(void)
 	 //Se la distanza non è sicura mi fermo
 	 distanza = VL53L0X_PROXIMITY_GetDistance();
 	 if( distanza < MAX_DISTANCE ){
+		frena();
 		spegni_motori();
 		printf("DISTANCE is = %d mm \n\r", distanza);
 		HAL_Delay(100);
