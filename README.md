@@ -235,18 +235,17 @@ La funzione ritorna 1 (int) se sotto la sezione sinistra della macchina, vi è u
 void gira_orario(){
 
 	//La ruota dx va in antiorario
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
 
 	//La ruota sx va in orario
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
 
 	  //Finché la macchina non rileva una linea al centro
 	  //continua a girare
-	  while(!linea_nera_centrale() && linea_nera_sx())
-		  HAL_Delay(10);
+	  while(!linea_nera_centrale() && linea_nera_dx())
+	  		  HAL_Delay(10);
 	  //Trovata la linea mi fermo e spengo i motori
 	  frena();
 	  spegni_motori();
@@ -264,17 +263,18 @@ Una volta riportata la linea al centro, si fermano i motori e si spengono.
 void gira_antiorario(){
 
 	//La ruota dx va in orario
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
 
 	//La ruota sx va in antiorario
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+
 
 	  //Finché la macchina non rileva una linea al centro
 	  //continua a girare
-	  while(!linea_nera_centrale() && linea_nera_dx())
-	  		  HAL_Delay(10);
+	  while(!linea_nera_centrale() && linea_nera_sx())
+		  HAL_Delay(10);
 	  //Trovata la linea mi fermo e spengo i motori
 	  frena();
 	  spegni_motori();
@@ -326,10 +326,10 @@ while (1)
 		//Se non trovo la linea nera centrale allora controllo ai lati
 		if( linea_nera_sx() ){
 			//Mi riposiziono per eccitare il sensore centrale girando in senso orario
-			gira_orario(&linea_centrale, &linea_sx);
+			gira_antiorario();
 		}else if( linea_nera_dx() ){
 			//Mi riposiziono per eccitare il sensore centrale girando in senso antiorario
-			gira_antiorario(&linea_centrale, &linea_dx);
+			gira_orario();
 		//Se non c'è alcuna linea mi fermo
 		}else{
 			frena();
@@ -367,12 +367,12 @@ if( linea_nera_centrale() ){
 }
 ```
 
-Nel caso in cui la linea nera non si trovi al centro, si prosegue controllando che questa sia a sinistra, in caso affermativo bisognerà ruotare la macchina tramite la funzione ```gira_orario()```
+Nel caso in cui la linea nera non si trovi al centro, si prosegue controllando che questa sia a sinistra, in caso affermativo bisognerà ruotare la macchina tramite la funzione ```gira_antiorario()```
 
 ```
 if( linea_nera_sx() ){
 	//Mi riposiziono per eccitare il sensore centrale girando in senso orario
-	gira_orario(&linea_centrale, &linea_sx);
+	gira_antiorario();
 }
 ```
 
@@ -381,7 +381,7 @@ Se la linea non dovesse trovarsi a sinistra, allora si procederà controllando a
 ```
 else if( linea_nera_dx() ){
 	//Mi riposiziono per eccitare il sensore centrale girando in senso antiorario
-	gira_antiorario(&linea_centrale, &linea_dx);
+	gira_orario();
 }
 
 ```
