@@ -325,10 +325,10 @@ while (1)
 	}else{
 		//Se non trovo la linea nera centrale allora controllo ai lati
 		if( linea_nera_sx() ){
-			//Mi riposiziono per eccitare il sensore centrale girando in senso orario
+			//Mi riposiziono per eccitare il sensore centrale girando in senso antiorario
 			gira_antiorario();
 		}else if( linea_nera_dx() ){
-			//Mi riposiziono per eccitare il sensore centrale girando in senso antiorario
+			//Mi riposiziono per eccitare il sensore centrale girando in senso orario
 			gira_orario();
 		//Se non c'è alcuna linea mi fermo
 		}else{
@@ -371,7 +371,7 @@ Nel caso in cui la linea nera non si trovi al centro, si prosegue controllando c
 
 ```
 if( linea_nera_sx() ){
-	//Mi riposiziono per eccitare il sensore centrale girando in senso orario
+	//Mi riposiziono per eccitare il sensore centrale girando in senso antiorario
 	gira_antiorario();
 }
 ```
@@ -380,7 +380,7 @@ Se la linea non dovesse trovarsi a sinistra, allora si procederà controllando a
 
 ```
 else if( linea_nera_dx() ){
-	//Mi riposiziono per eccitare il sensore centrale girando in senso antiorario
+	//Mi riposiziono per eccitare il sensore centrale girando in senso orario
 	gira_orario();
 }
 
