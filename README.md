@@ -291,8 +291,8 @@ Il caso è molto simile a quello precedentemente analizzato ma con le direzioni 
 |    MSB    |	LSB   |	   OUTPUT    |
 |:-----------:|:---------:|:--------------:|
 |	  0     |    0    | Motore spento  |
-|	  0     |    1    | Ruota antiorario    |
-|	  1     |    0    | Ruota orario    |
+|	  0     |    1    | Ruota orario    |
+|	  1     |    0    | Ruota antiorario    |
 |	  1     |    1    |    Frena     |
 
 
