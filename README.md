@@ -396,4 +396,44 @@ else{
 
 ```
 
+## Collegamenti dei dispositivi
+
+In questa sezione si fornirà un breve accenno su un possibile schema di connessione tra le varie componenti. La rappresentazione sarà divisa in due sezioni:
+<ul>
+	<li>Apparato di rilevamento</li>
+	<li>Apparato di movimento</li>
+</ul>
+
+
+### Apparato di rilevamento
+Di seguito è riportato un possibile schema di interconnessione tra i sensori di rilevamento della linea nera e la scheda di controllo.
+![interconnessione_sensori](/resources/sensori.jpeg)
+In questo esempio è stata utilizzata una breadboard per gestire meglio il cablaggio. 
+Due cabi di alimentazione (rosso e blu) vengono collegati sulla breadboard. La loro differernza di potenziale è di 5V. Si è scelto di utilizzare questa tensione per ottenere una più facile calibrazione dei sensori. 
+È utile notare che l'alimentazione è comune. 
+Ogni sensore possiede un pin denominato ***"OUT"***, dove verrà propagato un segnale in uscita nel caso in cui vi sia posta una linea nera davanti al diodo LED infrarossi. 
+Ogni uscita sarà dunque collegata all'unità di controllo ***(giallo, verde e grigio)*** che potrà così leggere i dati in ingresso e capire l'effettiva posizione della linea nera. I pin utilizzati in ingresso alla scheda saranno:
+
+| PIN |      FUNZIONE      |
+|:---:|:------------------:|
+| D9  | Controllo centrale |
+| D10 | Controllo sinistra |
+| D11 | Controllo destra   |
+
+### Apparato di movimento
+Di seguito è riportato un possibile schema di interconnessione tra l'unità di controllo e gli attuatori che permetteranno il movimento.
+![interconnessione_attuatori](/resources/attuatori.jpeg)
+Come anticipato nella sezione [attuatori,](#attuatori) si utilizzerà una tensione di 3.3V per garantire maggiore precisione alle ruote, a discapito della velocità. 
+4 PIN del volume di controllo si occuperanno di rappresentare le varie combinazioni di ingresso per manovrare correttamente la macchina. I pin e il loro funzionamento sono riportati nella sezione [inizializzazione PIN](#inizializzazione_pin) e di seguito:
+| PIN |			Funzione  		|
+|:---:|:---------------------------------------:|
+|D4   |		MSB Ruota 1			|
+|D5   |		LSB Ruota 1			|
+|D6   |		MSB Ruota 2			|
+|D7   |		LSB Ruota 2			|
+
+A seconda della combinazione fornita, il circuito L298N gestirà le ruote, permettendo loro di girare in un senso o in un altro.
+
+
+
 
